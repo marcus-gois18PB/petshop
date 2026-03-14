@@ -21,14 +21,15 @@ public abstract class ServicoBase implements ServicoCalculo {
   public int codigo(){
   return codigo;
   }
-  public abstract double calcularPreco(){
+  @Override
+  public abstract double CalculoPreco(){
    return preco;
   }
+  @Override
   public String getDescricao(){
   return descricao;
   }
-
-    public boolean equals(Object object) {
+    public boolean equals(Object o) {
         if (!(object instanceof ServicoBase)) return false;
         if (!super.equals(object)) return false;
         ServicoBase that = (ServicoBase) object;
