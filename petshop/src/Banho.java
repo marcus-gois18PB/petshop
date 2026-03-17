@@ -1,38 +1,36 @@
-import java.util.LocalDate;
-import java.util.Objects;
+public class Banho extends ServicoBase {
+    private TamPelo pelo;
 
-public class Banho implements {
-public enum TamPelo{
-  Curto, Medio, Grande
-}
-
-    public Banho(double tampelo) {
-        Tampelo = tampelo;
+    public Banho(int cod, LocalDate data, Tamanho tamanho, TamPelo pelo) {
+        super(cod, data, tamanho);
+        this.pelo = pelo;
+        this.preco = calculaPreco(); // Atualiza com a regra específica
     }
 
-    private double Tampelo;
+    @Override
+    public double calculaPreco() {
+        double valorBase = switch (tamanho) {
+            case PEQUENO -> 50.0;
+            case MEDIO -> 60.0;
+            case GRANDE -> 70.0;
+        };
+
+        double acrescimoPelo = switch (pelo) {
+            case CURTO -> 0.0;
+            case MEDIO -> 15.0;
+            case LONGO -> 25.0;
+        };
+
+        return valorBase + acrescimoPelo;
+    }
+
+    @Override
+    public String getDescricao() {
+        return "Banho - " + tamanho + " / Pêlo " + pelo;
+    }
 
     @Override
     public String toString() {
-        return "Banho{" +
-                "pelo=" + pelo +
-                '}';
+        return String.format("[%d] %s | Data: %s | Preço: R$ %.2f", cod, getDescricao(), data, calculaPreco());
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Banho banho = (Banho) o;
-        return Objects.equals(Tampelo, banho.Tampelo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), Tampelo);
-    }
-
-    
-
 }
-
